@@ -1,21 +1,22 @@
 <script lang='ts'>
 	import FilterMember from "./Filter-member.svelte";
-	import type { FilterMemberDTO } from "./dto/filter-member.dto";
+	import type { FilterDTO } from "./dto/filter.dto";
 
-  export let title = '';
-  export let members:FilterMemberDTO[] = [];
+  export let data: FilterDTO;
 
 </script>
 
 
 <div id='filter-name'>
-  <h1>{title}</h1>
+  <h1>{data.title}</h1>
   <ul id='member-list'>
-    {#each members as member}
-      <li>
-        <FilterMember data={member}></FilterMember>
-      </li>
-    {/each}
+    {#if Array.isArray(data.members) && data.members.length > 0}
+      {#each data.members as member}
+        <li>
+          <FilterMember data={member}></FilterMember>
+        </li>
+      {/each}
+    {/if}
   </ul>
 </div>
 

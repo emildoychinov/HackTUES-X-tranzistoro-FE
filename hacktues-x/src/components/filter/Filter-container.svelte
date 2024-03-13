@@ -8,11 +8,13 @@
 
 <div id='filter-container'>
   <ul id='filter-list'>
-    {#each filters as filter}
-      <li>
-        <Filter members={filter.members} title={filter.title}></Filter>
-      </li>
-    {/each}
+    {#if Array.isArray(filters) && filters.length > 0}
+      {#each filters as filter}
+        <li>
+          <Filter data={filter}></Filter>
+        </li>
+      {/each}
+    {/if}
   </ul>
 </div>
 
