@@ -1,28 +1,42 @@
 <script lang='ts'>
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
   import type { FilterMemberDTO } from "./dto/filter-member.dto";
-  import { Checkbox, Radio } from 'flowbite-svelte';
+  import { Checkbox, Group, Radio } from 'flowbite-svelte';
 
   export let data: FilterMemberDTO;
   export let isSingleChoice: boolean = true;
   export let parent: string = '';
-  export let value: number = 0;
-  let isSelected: boolean = false;
+  export let isSelected: boolean = false;
+  let selected: string = '';
+  let groupSelect: string[] = [];
+  
   const dispatch = createEventDispatcher();
+
+  onMount(() => {
+    if(isSelected){
+      if(isSingleChoice)
+        selected = data.name;
+      else
+        groupSelect = [data.name];
+    }
+  })
 
 </script>
 
 <div id='member-name-container'>
   {#if isSingleChoice}
-    <Radio on:click={() => {
+    <Radio bind:group={selected}
+    on:click={() => {
       isSelected = !isSelected; 
       dispatch('radioSelection', {
         filter: data.name,
         selected: isSelected
       })
-    }} checked={isSelected} name={`radio-element-${parent}`}>{data.name}</Radio>
+    }} checked={isSelected} name={`radio-element-${parent}`} value={data.name}>{data.name}</Radio>
   {:else}
-    <Checkbox {value} on:change={
+    <Checkbox value={data.name}
+    bind:group={groupSelect}
+    on:change={
       () => { 
         isSelected = !isSelected; 
         dispatch('checkboxSelection', {

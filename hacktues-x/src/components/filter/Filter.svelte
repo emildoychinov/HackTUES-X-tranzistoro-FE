@@ -1,4 +1,5 @@
 <script lang='ts'>
+	import { writable } from "svelte/store";
 	import { updateFilterStore } from "../../stores/filter.stores";
 	import FilterMember from "./Filter-member.svelte";
 	import type { FilterDTO } from "./dto/filter.dto";
@@ -6,46 +7,56 @@
   export let data: FilterDTO;
   let group: string[] = [];
   let selected: string = '';
+  let showList = writable(false);
 
 </script>
 
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <div id='filter-name'>
-  <h1 id='title'>{data.title}</h1>
-  <ul id='member-list'>
-    {#if Array.isArray(data.members) && data.members.length > 0}
-      {#each data.members as member, index}
-        <li id='filter-member'>
-          <FilterMember 
-            value={index} 
-            parent={data.title} 
-            data={member} 
-            isSingleChoice={data.isSingle ?? true}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <h1 id='title' on:click={() => {
+    showList.update((value)=>{
+      return !value;
+    })
+  }}>{data.title}</h1>
+  {#if $showList}
+    <ul id='member-list'>
+      {#if Array.isArray(data.members) && data.members.length > 0}
+        {#each data.members as member}
+          <li id='filter-member'>
+            <FilterMember 
+              parent={data.title} 
+              data={member}
+              isSingleChoice={data.isSingle ?? true}
+              isSelected={group.includes(member.name) || selected === member.name}
 
-            on:radioSelection={(event) => {
-              selected = event.detail.selected ? event.detail.filter : '';
-              updateFilterStore(data.title, selected, undefined);
-            }}
+              on:radioSelection={(event) => {
+                selected = event.detail.selected ? event.detail.filter : '';
+                updateFilterStore(data.title, selected, undefined);
+              }}
 
-            on:checkboxSelection={(event) => {
+              on:checkboxSelection={(event) => {
 
-              if(event.detail.selected){
-                group.push(event.detail.filter);
-              }else{
-                const filterIndex = group.indexOf(event.detail.filter);
-                if(filterIndex > -1){
-                  group = group.filter(member => member !== event.detail.filter)
+                if(event.detail.selected){
+                  group.push(event.detail.filter);
+                }else{
+                  const filterIndex = group.indexOf(event.detail.filter);
+                  if(filterIndex > -1){
+                    group = group.filter(member => member !== event.detail.filter)
+                  }
                 }
-              }
-              updateFilterStore(data.title, undefined, group);
+                updateFilterStore(data.title, undefined, group);
 
-            }}
+              }}
 
-          />
-        </li>
-      {/each}
-    {/if}
-  </ul>
+            />
+          </li>
+        {/each}
+      {/if}
+    </ul>
+  {/if}
 </div>
 
 <style lang='scss'>
