@@ -10,9 +10,9 @@
   <h1 id='title'>{data.title}</h1>
   <ul id='member-list'>
     {#if Array.isArray(data.members) && data.members.length > 0}
-      {#each data.members as member}
+      {#each data.members as member, index}
         <li id='filter-member'>
-          <FilterMember parent={data.title} data={member} isSingleChoice={data.isSingle ?? true}></FilterMember>
+          <FilterMember value={index} parent={data.title} data={member} isSingleChoice={data.isSingle ?? true}></FilterMember>
         </li>
       {/each}
     {/if}
