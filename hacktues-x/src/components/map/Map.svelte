@@ -11,7 +11,7 @@
 	];
 </script>
 
-<div class="w-full h-screen">
+<div id='map-container' class="rounded-lg">
 	<Leaflet view={initialView} zoom={14}>
 		{#each markerLocations as latLng}
 			<Marker {latLng} width={40} height={40}>
@@ -29,10 +29,17 @@
 					/>
 				</svg>
 
-				<Popup
-					>Like & Subscribe! This is a very loooooooooooong title and it has many characters.</Popup
-				>
+				<Popup>Like & Subscribe! This is a very loooooooooooong title and it has many characters.</Popup>
 			</Marker>
 		{/each}
 	</Leaflet>
 </div>
+
+<style lang="scss">
+    #map-container{
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+    }
+</style>

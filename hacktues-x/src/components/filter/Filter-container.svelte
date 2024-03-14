@@ -1,17 +1,8 @@
 <script lang='ts'>
-	import { filterStore } from "../../stores/filter.stores";
 
-  
   import Filter from "./Filter.svelte";
   import type { FilterDTO } from "./dto/filter.dto";
   export let filters: FilterDTO[] = [];
-
-  const handleFilters = () => {
-    const unsubscribe = filterStore.subscribe(value => {
-        console.log(value);
-    });
-    unsubscribe();
-}
 
 </script>
 
@@ -25,11 +16,6 @@
       {/each}
     {/if}
   </ul>
-  <div id='button-container'>
-    <button id='apply-filters' on:click={handleFilters}>
-      Apply
-    </button>
-  </div>
 </div>
 
 <style lang='scss'>
@@ -51,18 +37,14 @@
   #filter-list {
     display: flex;
     width: 100%;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
     list-style-type: none;
     padding: 0; 
     margin: 0; 
   }
   
-  #filter{
-    width: 90%;
-  }
-
   #filter-container::-webkit-scrollbar {
     width: 6px; 
   }

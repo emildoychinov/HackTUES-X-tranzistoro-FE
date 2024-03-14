@@ -48,8 +48,8 @@
 	}
 </script>
 
-<div class="w-full h-full" bind:this={mapElement}>
-	{#if map}
-		<slot />
-	{/if}
+<div class="w-full h-full rounded-lg shadow-xl bg-white" bind:this={mapElement}>
+    {#if map}
+        <slot />
+    {/if}
 </div>

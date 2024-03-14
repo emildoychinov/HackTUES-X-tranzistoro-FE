@@ -1,14 +1,20 @@
 <script lang='ts'>
-	import { writable } from "svelte/store";
-	import { updateFilterStore } from "../../stores/filter.stores";
+	import { filterStore, updateFilterStore } from "../../stores/filter.stores";
 	import FilterMember from "./Filter-member.svelte";
 	import type { FilterDTO } from "./dto/filter.dto";
-  import { AccordionItem, Accordion } from 'flowbite-svelte';
+  import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
 
   export let data: FilterDTO;
   let group: string[] = [];
   let selected: string = '';
   let showList = false;
+
+  const handleFilters = () => {
+    const unsubscribe = filterStore.subscribe(value => {
+        console.log(value);
+    });
+    unsubscribe();
+  } 
 
 </script>
 
@@ -17,12 +23,11 @@
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <div id='filter-name'> 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <Accordion>
-    <AccordionItem>
-      <span slot="header" id='title'>{data.title}</span>
+  <Button color="alternative">{data.title}</Button>
+  <Dropdown>
       {#each data.members as member}
-        <p class="pl-3 pb-1">
-          <FilterMember 
+      <DropdownItem>
+        <FilterMember 
             parent={data.title} 
             data={member}
             isSingleChoice={data.isSingle ?? true}
@@ -31,6 +36,7 @@
             on:radioSelection={(event) => {
               selected = event.detail.selected ? event.detail.filter : '';
               updateFilterStore(data.title, selected, undefined);
+              handleFilters();
             }}
   
             on:checkboxSelection={(event) => {
@@ -44,14 +50,12 @@
                 }
               }
               updateFilterStore(data.title, undefined, group);
-  
+              handleFilters();
             }}
-  
           />
-        </p>
+      </DropdownItem>
       {/each}
-    </AccordionItem>
-  </Accordion>
+  </Dropdown>
 </div>
 
 <style lang='scss'>
