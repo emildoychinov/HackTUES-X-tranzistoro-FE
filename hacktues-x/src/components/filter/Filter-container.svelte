@@ -25,12 +25,20 @@
       {/each}
     {/if}
   </ul>
-  <button id='apply-filters' on:click={handleFilters}>
-    Apply
-  </button>
+  <div id='button-container'>
+    <button id='apply-filters' on:click={handleFilters}>
+      Apply
+    </button>
+  </div>
 </div>
 
 <style lang='scss'>
+
+  #button-container{
+    display: flex;
+    width: 100%;
+    padding-left: 10px;
+  }
   #filter-container {
     display: flex;
     flex-direction: column;
@@ -69,12 +77,29 @@
     background-color: transparent;
   }
 
-  #apply-filters{
+  #apply-filters {
     width: 100%;
     margin-top: 10px;
     border-radius: 5px;
-    border: 0px;
-    background-color: rgb(0, 217, 255)
+    border: none;
+    background-color: rgb(0, 184, 212);
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  #apply-filters:hover {
+    background-color: rgb(0, 152, 172);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  #apply-filters:focus {
+    outline: none;
   }
 
   #apply-filters:hover{

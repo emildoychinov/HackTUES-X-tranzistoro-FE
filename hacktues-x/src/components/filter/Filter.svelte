@@ -3,78 +3,61 @@
 	import { updateFilterStore } from "../../stores/filter.stores";
 	import FilterMember from "./Filter-member.svelte";
 	import type { FilterDTO } from "./dto/filter.dto";
+  import { AccordionItem, Accordion } from 'flowbite-svelte';
 
   export let data: FilterDTO;
   let group: string[] = [];
   let selected: string = '';
-  let showList = writable(false);
+  let showList = false;
 
 </script>
 
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<div id='filter-name'>
+<div id='filter-name'> 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <h1 id='title' on:click={() => {
-    showList.update((value)=>{
-      return !value;
-    })
-  }}>{data.title}</h1>
-  {#if $showList}
-    <ul id='member-list'>
-      {#if Array.isArray(data.members) && data.members.length > 0}
-        {#each data.members as member}
-          <li id='filter-member'>
-            <FilterMember 
-              parent={data.title} 
-              data={member}
-              isSingleChoice={data.isSingle ?? true}
-              isSelected={group.includes(member.name) || selected === member.name}
-
-              on:radioSelection={(event) => {
-                selected = event.detail.selected ? event.detail.filter : '';
-                updateFilterStore(data.title, selected, undefined);
-              }}
-
-              on:checkboxSelection={(event) => {
-
-                if(event.detail.selected){
-                  group.push(event.detail.filter);
-                }else{
-                  const filterIndex = group.indexOf(event.detail.filter);
-                  if(filterIndex > -1){
-                    group = group.filter(member => member !== event.detail.filter)
-                  }
+  <Accordion>
+    <AccordionItem>
+      <span slot="header" id='title'>{data.title}</span>
+      {#each data.members as member}
+        <p class="pl-3 pb-1">
+          <FilterMember 
+            parent={data.title} 
+            data={member}
+            isSingleChoice={data.isSingle ?? true}
+            isSelected={group.includes(member.name) || selected === member.name}
+  
+            on:radioSelection={(event) => {
+              selected = event.detail.selected ? event.detail.filter : '';
+              updateFilterStore(data.title, selected, undefined);
+            }}
+  
+            on:checkboxSelection={(event) => {
+  
+              if(event.detail.selected){
+                group.push(event.detail.filter);
+              }else{
+                const filterIndex = group.indexOf(event.detail.filter);
+                if(filterIndex > -1){
+                  group = group.filter(member => member !== event.detail.filter)
                 }
-                updateFilterStore(data.title, undefined, group);
-
-              }}
-
-            />
-          </li>
-        {/each}
-      {/if}
-    </ul>
-  {/if}
+              }
+              updateFilterStore(data.title, undefined, group);
+  
+            }}
+  
+          />
+        </p>
+      {/each}
+    </AccordionItem>
+  </Accordion>
 </div>
 
 <style lang='scss'>
-  #member-list{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    list-style-type: none;
-    list-style-position:inside;
-    margin:0;
-    padding:0;
-  }
 
-  #filter-member{
-    width: 100%;  
-    padding-left: 20px;
+  #filter-name{
+    padding-left: 10px;
   }
 
   #title::after{

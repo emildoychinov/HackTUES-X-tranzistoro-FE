@@ -7,6 +7,7 @@
   export let isSingleChoice: boolean = true;
   export let parent: string = '';
   export let isSelected: boolean = false;
+  export let color = "rgb(0, 184, 212)"
   let selected: string = '';
   let groupSelect: string[] = [];
   
