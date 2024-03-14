@@ -57,7 +57,6 @@
 <style lang='scss'>
 
   #filter-name{
-    padding-left: 10px;
   }
 
   #title::after{

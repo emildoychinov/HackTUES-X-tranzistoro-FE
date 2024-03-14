@@ -48,10 +48,10 @@
 
 <style lang='scss'>
 	#parent-container {
-    height: calc(100vh - 20px);
-    width: calc(100vw - 20px);
+		height: calc(100vh - 20px);
+    	width: calc(100vw - 20px);
 		margin: 0;
-    overflow: hidden;
+    	overflow: hidden;
 	}
 
 	#parent-container {
@@ -61,14 +61,15 @@
 	}
 
 	#filters{
-    height: 100%;
-		width: 20%; 
+		height: 100%;
+		width: 20%;
+		padding-left: 1em;
 	}
 
-  #page-content{
-    height: 100%;
-    width: 80%;
-  }
+	#page-content{
+		height: 100%;
+		width: 80%;
+	}
 
 	.scroll-hidden {
 		overflow: hidden;

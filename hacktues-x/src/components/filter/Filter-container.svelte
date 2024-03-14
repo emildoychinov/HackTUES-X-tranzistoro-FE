@@ -37,7 +37,6 @@
   #button-container{
     display: flex;
     width: 100%;
-    padding-left: 10px;
   }
   #filter-container {
     display: flex;
