@@ -1,8 +1,12 @@
 <script lang='ts'>
+	import { updateFilterStore } from "../../stores/filter.stores";
 	import FilterMember from "./Filter-member.svelte";
 	import type { FilterDTO } from "./dto/filter.dto";
 
   export let data: FilterDTO;
+  let group: string[] = [];
+  let selected: string = '';
+
 </script>
 
 
@@ -12,7 +16,32 @@
     {#if Array.isArray(data.members) && data.members.length > 0}
       {#each data.members as member, index}
         <li id='filter-member'>
-          <FilterMember value={index} parent={data.title} data={member} isSingleChoice={data.isSingle ?? true}></FilterMember>
+          <FilterMember 
+            value={index} 
+            parent={data.title} 
+            data={member} 
+            isSingleChoice={data.isSingle ?? true}
+
+            on:radioSelection={(event) => {
+              selected = event.detail.selected ? event.detail.filter : '';
+              updateFilterStore(data.title, selected, undefined);
+            }}
+
+            on:checkboxSelection={(event) => {
+
+              if(event.detail.selected){
+                group.push(event.detail.filter);
+              }else{
+                const filterIndex = group.indexOf(event.detail.filter);
+                if(filterIndex > -1){
+                  group = group.filter(member => member !== event.detail.filter)
+                }
+              }
+              updateFilterStore(data.title, undefined, group);
+
+            }}
+
+          />
         </li>
       {/each}
     {/if}

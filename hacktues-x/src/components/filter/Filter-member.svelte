@@ -2,15 +2,13 @@
 	import { createEventDispatcher } from "svelte";
   import type { FilterMemberDTO } from "./dto/filter-member.dto";
   import { Checkbox, Radio } from 'flowbite-svelte';
-	import { updateFilterStore } from "../../stores/filter.stores";
 
   export let data: FilterMemberDTO;
   export let isSingleChoice: boolean = true;
   export let parent: string = '';
-  export let group: number[] = [];
-  export let selected: any = '';
   export let value: number = 0;
   let isSelected: boolean = false;
+  const dispatch = createEventDispatcher();
 
 </script>
 
@@ -18,16 +16,21 @@
   {#if isSingleChoice}
     <Radio on:click={() => {
       isSelected = !isSelected; 
-      updateFilterStore(parent, data.name, undefined, isSelected)
+      dispatch('radioSelection', {
+        filter: data.name,
+        selected: isSelected
+      })
     }} checked={isSelected} name={`radio-element-${parent}`}>{data.name}</Radio>
   {:else}
     <Checkbox {value} on:change={
       () => { 
-        group = [], group.push(value), 
         isSelected = !isSelected; 
-        updateFilterStore(parent, undefined, group, isSelected)
+        dispatch('checkboxSelection', {
+          filter: data.name,
+          selected: isSelected
+        })
       }
-    } bind:selected name={`${parent}-${data.name}`} >{data.name} </Checkbox>
+    } name={`${parent}-${data.name}`} >{data.name} </Checkbox>
   {/if}
 </div>
 

@@ -5,15 +5,11 @@
   import Filter from "./Filter.svelte";
   import type { FilterDTO } from "./dto/filter.dto";
   export let filters: FilterDTO[] = [];
-  //TODO: print filters to test
+
   const handleFilters = () => {
-    // Subscribe to the filters store
     const unsubscribe = filterStore.subscribe(value => {
-        // Log the current value of the filters store
         console.log(value);
     });
-
-    // Unsubscribe from the store to prevent memory leaks
     unsubscribe();
 }
 
