@@ -41,9 +41,9 @@
 	<div id='filters' class="scroll-hidden">
 		<FilterContainer {filters}/>
 	</div>
-	<div id='page-content' class="scroll-hidden">
-
-	</div>
+	<!-- <div id='page-content' class="scroll-hidden">
+		<Map></Map>
+	</div> -->
 </div>
 
 <style lang='scss'>
