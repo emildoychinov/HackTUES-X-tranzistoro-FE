@@ -4,6 +4,7 @@
 
   export let gyms: GymDTO[] = [
   {
+    id: 1,
     name: "Fitness World",
     logo: "fitnessworld_logo.png",
     location: {
@@ -16,6 +17,7 @@
     classes: ["Zumba", "Spin", "Body Pump"],
   },
   {
+    id: 2,
     name: "Power Gym",
     logo: "powergym_logo.png",
     location: {
@@ -28,6 +30,7 @@
     classes: ["CrossFit", "Kickboxing", "Jiu-Jitsu"],
   },
   {
+    id: 3,
     name: "Flex Fitness",
     logo: "flexfitness_logo.png",
     location: {
@@ -41,6 +44,7 @@
   },
   // Add more gyms here
   {
+    id: 4,
     name: "Muscle Haven",
     logo: "musclehaven_logo.png",
     location: {
@@ -53,6 +57,7 @@
     classes: ["Strength Training", "Functional Fitness", "Circuit Training"],
   },
   {
+    id: 5,
     name: "Fit Nation",
     logo: "fitnation_logo.png",
     location: {
@@ -65,6 +70,7 @@
     classes: ["CrossFit", "Spinning", "Boot Camp"],
   },
   {
+    id: 6,
     name: "Iron Temple",
     logo: "irontemple_logo.png",
     location: {
@@ -77,6 +83,7 @@
     classes: ["Bodybuilding", "Functional Fitness", "Strength Training"],
   },
   {
+    id: 7,
     name: "Wellness Junction",
     logo: "wellnessjunction_logo.png",
     location: {
@@ -89,6 +96,7 @@
     classes: ["Yoga", "Pilates", "Meditation"],
   },
   {
+    id: 8,
     name: "Peak Performance",
     logo: "peakperformance_logo.png",
     location: {
@@ -101,6 +109,7 @@
     classes: ["Athletic Training", "Sports Conditioning", "Rehabilitation"],
   },
   {
+    id: 9,
     name: "Active Fitness",
     logo: "activefitness_logo.png",
     location: {
@@ -113,6 +122,7 @@
     classes: ["Functional Training", "Group Fitness", "Strength Training"],
   },
   {
+    id: 10,
     name: "Health Hub",
     logo: "healthhub_logo.png",
     location: {
@@ -124,125 +134,25 @@
     tags: ["Health", "Wellness", "Lifestyle"],
     classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
   },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
-  {
-    name: "Health Hub",
-    logo: "healthhub_logo.png",
-    location: {
-      lon: 144.9631,
-      lat: -37.8136,
-    },
-    images: ["gym10_image1.jpg", "gym10_image2.jpg"],
-    departments: ["Wellness", "Mind-Body", "Nutrition"],
-    tags: ["Health", "Wellness", "Lifestyle"],
-    classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
-  },
+  // Additional "Health Hub" entries...
 ];
 </script>
 
-<body>
+<div>
   <div class="container">
     {#each gyms as gym}
       <Gym gym={gym}/>
     {/each}
   </div>
-</body>
+</div>
 
 <style>
   .container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    padding: 20px;
-    max-height: 80vh; /* Set maximum height */
-    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 80vh; 
+    overflow-y: auto; 
   }
 
-  body {
-    overflow: hidden;
-    height: 100%;
-  }
 </style>

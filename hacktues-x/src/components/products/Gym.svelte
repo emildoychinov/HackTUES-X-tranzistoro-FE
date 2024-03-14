@@ -3,66 +3,27 @@
   export let gym: GymDTO;
 </script>
 
-<body>
-    <div class="container">
-      <div class="gym-info">
-        <div class="gym-name">{gym.name}</div>
-        <div>Classes:</div>
-        <ul class="classes-list">
-          {#if Array.isArray(gym.classes)}
-            {#each gym.classes as gymClass}
-            <li>{gymClass}</li>
-            {/each}
-          {/if}
-        </ul>
-  
-        <div>Departments:</div>
-        <ul class="departments-list">
-          {#if Array.isArray(gym.departments)}
-            {#each gym.departments as gymDepartment}
-            <li>{gymDepartment}</li>
-            {/each}
-          {/if}
-        </ul>
-      </div>
-    </div>
-</body>
+<a class="container" href='/'>
+	<img class="img" src="https://emilypost.com/client_media/images/blogs/everyday-gym.jpg" alt={gym.name}/>
+  <div >{gym.name}</div>
+</a>
 
 <style>
-	body {
-		font-family: Arial, sans-serif;
-		padding: 20px;
-	}
-
 	.container {
 		display: flex;
 		justify-content: center; 
+		align-items: center;
+		font-family: Arial, sans-serif;
+		flex-direction: column;
+		max-width: 20%;
+		max-height: 10%;
 	}
 
-	.gym-info {
-		margin-bottom: 20px;
-		border: 1px solid #666; 
-		padding: 10px; 
-		width: 300px; 
+	.img {
+		object-fit: scale-down;
+		height: 80%;
+		width: 80%;
+		align-self: center;
 	}
 
-	.gym-info > div {
-		margin-bottom: 10px;
-		font-size: 18px;
-		color: #333;
-	}
-
-	.gym-info .classes-list,
-	.gym-info .departments-list {
-		list-style-type: none;
-		padding: 0;
-		margin-left: 0;
-	}
-
-	.gym-info .classes-list li,
-	.gym-info .departments-list li {
-		margin-bottom: 5px;
-		font-size: 16px;
-		color: #666;
-	}
 </style>
