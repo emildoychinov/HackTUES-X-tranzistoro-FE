@@ -22,7 +22,6 @@ export function updateFilterStore(
 			filterStore.push({ name, selected, group });
 		}
 
-		console.log(filterStore);
 		return filterStore;
 	});
 }
