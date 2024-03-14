@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Badge, Button, Card, Carousel, Thumbnails, Toggle } from "flowbite-svelte";
     import type { CardDTO } from "./dto/card.dto";
+	import { fade } from "svelte/transition";
 
-    export const data: CardDTO = {
+    export let data: CardDTO = {
         name: 'Premium Gym Flais Nadejda',
         address: 'g.k Nadejda, ul. "Lyuborodie", 1220 Sofia',
         people: 7,
@@ -23,13 +24,15 @@
     };
 </script>
 
-<div id='card-container'>
+<div id='card-container' transition:fade>
     <Card id='project-card' class='h-full max-w-4xl object-contain overflow-y-scroll'>
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{data.name}</h5>
-        <h6 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{data.address}</h6>
+        <div id='card-head'>
+            <h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{data.name}</h5>
+            <h6 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{data.address}</h6>
+        </div>
         <div class="max-w-4xl">
             <div class="max-w-4xl space-y-4">
-                <Carousel images={data.images} imgClass="h-full w-full rounded-sm" let:Indicators let:Controls class="rounded-md border-gray dark:border-gray-800 min-h-[320px] bg-gray-200">
+                <Carousel images={data.images} imgClass="h-full w-full rounded-sm" let:Indicators let:Controls class="rounded-md border-gray dark:border-gray-800 min-h-[320px] bg-gray-200" style="height: 100px !important">
                   <Controls class="items-center text-black-400 dark:text-green-400 pt-4" />
                 </Carousel>
               </div>
