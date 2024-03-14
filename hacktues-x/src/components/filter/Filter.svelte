@@ -55,10 +55,6 @@
 </div>
 
 <style lang='scss'>
-
-  #filter-name{
-  }
-
   #title::after{
     content: '';
     display: block;
