@@ -49,7 +49,7 @@
 <style lang='scss'>
 	#parent-container {
 		height: calc(100vh - 20px);
-    	width: calc(100vw - 20px);
+    width: calc(100vw - 20px);
 		margin: 0;
     	overflow: hidden;
 	}
