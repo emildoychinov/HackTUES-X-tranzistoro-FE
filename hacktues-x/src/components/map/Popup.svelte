@@ -17,8 +17,8 @@
 
 		if (layer) {
 			layer.bindPopup(popup);
-			layer.on('popupopen', () => (dispatch('popupOpen', {id}), open = true));
-			layer.on('popupclose', () => (dispatch('popupOpen', {id}), open = false));
+			layer.on('popupopen', () => (dispatch('popupOpen', { id }), (open = true)));
+			layer.on('popupclose', () => (dispatch('popupOpen', { id }), (open = false)));
 		}
 	});
 
@@ -29,7 +29,7 @@
 	});
 </script>
 
-<div class='w-[100px]' bind:this={popupElement}>
+<div class="w-[100px]" bind:this={popupElement}>
 	{#if open}
 		<slot />
 	{/if}

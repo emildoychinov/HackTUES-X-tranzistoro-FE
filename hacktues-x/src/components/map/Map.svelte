@@ -24,23 +24,21 @@
 				[42.59672058773207, 23.59599665598854],
 				[42.59764921051795, 23.594948374414577]
 			];
-		})
-
-	})
+		});
+	});
 
 	const dispatch = createEventDispatcher();
 
-	$:if(leaflet && leaflet.getView() !== undefined){
-		setTimeout(()=>{
+	$: if (leaflet && leaflet.getView() !== undefined) {
+		setTimeout(() => {
 			console.log(leaflet.getMapBounds());
-		}, 100)
+		}, 100);
 	}
-
 </script>
 
-<div id='map-container' class="rounded-lg">
+<div id="map-container" class="rounded-lg">
 	{#key initialView}
-		<Leaflet bind:this={leaflet} view={initialView} zoom={15} >
+		<Leaflet bind:this={leaflet} view={initialView} zoom={15}>
 			{#each markerLocations as latLng, id}
 				<Marker {id} {latLng} width={40} height={40}>
 					<!-- ShipBit Icon -->
@@ -57,7 +55,12 @@
 						/>
 					</svg>
 
-					<Popup on:popupOpen={(event) => {dispatch('openCard', {id: event.detail.id})}} {id}>gym_name</Popup>
+					<Popup
+						on:popupOpen={(event) => {
+							dispatch('openCard', { id: event.detail.id });
+						}}
+						{id}>gym_name</Popup
+					>
 				</Marker>
 			{/each}
 		</Leaflet>
@@ -65,10 +68,10 @@
 </div>
 
 <style lang="scss">
-    #map-container{
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-    }
+	#map-container {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+	}
 </style>

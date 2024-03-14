@@ -1,19 +1,17 @@
-<script lang='ts'>
-	import MainPage from "../components/MainPage.svelte";
-
-	
+<script lang="ts">
+	import MainPage from '../components/MainPage.svelte';
 </script>
 
-<div id='parent-container'>
-	<MainPage/>
+<div id="parent-container">
+	<MainPage />
 </div>
 
-<style lang='scss'>
+<style lang="scss">
 	#parent-container {
 		height: 100vh;
-    	width: 100vw;
+		width: 100vw;
 		margin: 0;
-    	overflow: hidden;
+		overflow: hidden;
 	}
 	:global(body) {
 		color: rgb(207, 207, 207);
@@ -21,5 +19,4 @@
 		touch-action: manipulation;
 		background: #dddddd;
 	}
- 
 </style>
