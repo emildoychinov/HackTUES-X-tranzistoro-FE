@@ -2,6 +2,7 @@
 <script lang='ts'>
 	import FilterContainer from "../components/filter/Filter-container.svelte";
 	import GymsContainer from "../components/products/Gyms-container.svelte";
+	//TODO - fetch Gyms with pagination prolly
 	const filters = [
 		{
 			title: 'testFilter',

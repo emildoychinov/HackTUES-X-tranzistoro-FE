@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { Card } from "flowbite-svelte";
+  import { Button, Card } from "flowbite-svelte";
   import { onMount } from "svelte";
   import Chart, { type ChartItem } from "chart.js/auto";
-  import { departmentStore } from "../../../stores/department.store";
   import type { GymDTO } from "../dto/product.dto";
   
+  export let id: number;
+  //TODO - fetch statistic from db by gym ID
+
   export let gym: GymDTO = {
     id: 10,
     name: "Health Hub",
@@ -13,16 +15,25 @@
       lon: 144.9631,
       lat: -37.8136,
     },
-    images: ["https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg"],
+    images: ["https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg", "https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg","https://emilypost.com/client_media/images/blogs/everyday-gym.jpg"],
     departments: ["Wellness", "Mind-Body", "Nutrition"],
     tags: ["Health", "Wellness", "Lifestyle"],
     classes: ["Wellness Workshops", "Nutrition Classes", "Mindfulness Meditation"],
   };
+
   export let selected: string = "";
 
   const handleSelection = (selection: string) => {
     selected = selection === selected ? "" : selection;
   };
+  const currentDate = Date.now();
+
+  const datesLast7Days = Array.from({ length: 7 }, (_, i) => new Date(currentDate - i * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
+  export const daysOfWeek = datesLast7Days.map(timestamp => {
+      const date = new Date(timestamp);
+      const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+      return { timestamp, dayOfWeek };
+  });
 
   export let stat = {
     "00:00": 5,
@@ -74,6 +85,7 @@
     "23:00": 5,
     "23:30": 5
 };
+
 export let selectedMinHour: string = Object.keys(stat)[0];
   export let selectedMaxHour: string = Object.keys(stat)[Object.keys(stat).length - 1];
 
@@ -83,18 +95,19 @@ export let selectedMinHour: string = Object.keys(stat)[0];
     const ctx = document.getElementById("fitnessChart");
     if (ctx) {
       chart = new Chart(ctx as ChartItem, {
-        type: "line",
+        type: "bar",
         data: {
           labels: Object.keys(stat),
-          datasets: [{
+          datasets: [
+            {
             label: "Fitness Usage",
             data: Object.values(stat),
-            borderColor: "rgb(75, 192, 192)",
-            tension: 0.4,
-          }]
+            borderColor: "rgb(255, 255, 255)",
+            backgroundColor: "rgb(50, 120, 255)",
+          }
+        ]
         },
         options: {
-
           scales: {
             y: {
               beginAtZero: true
@@ -149,6 +162,17 @@ export let selectedMinHour: string = Object.keys(stat)[0];
         <option value={hour}>{hour}</option>
       {/each}
     </select>
+    
+    <label for="day">Day: </label>
+    <div class="flex flex-row flex-wrap rounded-md border justify-around">
+      {#each daysOfWeek as day}
+        <Button class="text-black rounded-md  border w-1/3  hover:bg-slate-100" value={day.dayOfWeek}>
+        {
+        day.timestamp == new Date(currentDate).toISOString().slice(0, 10)  ? "Today": day.dayOfWeek
+        }
+        </Button>
+      {/each}
+    </div>
   </div>
 </Card>
 

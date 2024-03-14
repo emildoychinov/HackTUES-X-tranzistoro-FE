@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { Card } from "flowbite-svelte";
 	import type { GymDTO } from "./dto/product.dto";
   export let gym: GymDTO;
 </script>
 
-<a class="container" href='/'>
+<Card class="container" href='/facility/2'>
 	<img class="img" src="https://emilypost.com/client_media/images/blogs/everyday-gym.jpg" alt={gym.name}/>
-  <div >{gym.name}</div>
-</a>
+  <div class="text-center text-xl font-bold">{gym.name}</div>
+</Card>
 
 <style>
 	.container {
