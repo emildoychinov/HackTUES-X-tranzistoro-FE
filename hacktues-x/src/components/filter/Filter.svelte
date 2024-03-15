@@ -15,7 +15,7 @@
 	let showList = false;
 
 	onMount(async () => {
-		serverData = (await getData(`/facilities/${data.type}`)).data;
+		serverData = (await getData(`facilities/${data.type}`)).data;
 	});
 
 	//TODO: send to server
