@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Card } from 'flowbite-svelte';
+	import { Badge, Button, Card } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import Chart, { type ChartItem } from 'chart.js/auto';
 	import type { GymDTO } from '../dto/product.dto';
@@ -52,6 +52,7 @@
 	export let selected: string = '';
 
 	const handleSelection = (selection: string) => {
+		console.log('test');
 		selected = selection === selected ? '' : selection;
 	};
 	const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -163,14 +164,17 @@
 	<div class="chip-container">
 		<div class="font-bold">Departments</div>
 		<br />
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		{#each gym.departments as department}
-			<Card
-				on:click={() => handleSelection(department)}
-				class={'h-1 max-w-fit scale-x-75 scale-y-75 items-center justify-center rounded-3xl text-black hover:bg-slate-400' +
-					(selected === department ? ' bg-slate-400 ' : ' bg-slate-300 ')}
-			>
-				<div class="self-center">{department}</div>
-			</Card>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div on:click={() => handleSelection(department)}>
+				<Badge
+					color='indigo'
+					class={'ml-[5px] h-10 max-w-fit rounded-2xl hover:bg-indigo-200 hover:cursor-pointer'  +
+					(selected === department ? ' bg-indigo-200 ' : ' bg-indigo-100 ')}
+				>{department}</Badge>
+			</div>
 		{/each}
 	</div>
 
