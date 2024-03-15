@@ -78,11 +78,9 @@
 		if (option === '-') {
 			newIndex = Math.max(index + newIndex - chunkSize, 0);
 			thumbnails = images.slice(newIndex, newIndex + chunkSize);
-			console.log(newIndex);
 		} else {
 			newIndex = Math.min(index + chunkSize + newIndex, maxIndex);
 			thumbnails = images.slice(newIndex, newIndex + chunkSize);
-			console.log(newIndex);
 		}
 	};
 

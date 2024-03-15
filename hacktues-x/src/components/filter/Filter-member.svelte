@@ -3,7 +3,7 @@
 	import type { FilterMemberDTO } from './dto/filter-member.dto';
 	import { Checkbox, Group, Radio } from 'flowbite-svelte';
 
-	export let data: FilterMemberDTO;
+	export let data: any;
 	export let isSingleChoice: boolean = true;
 	export let parent: string = '';
 	export let isSelected: boolean = false;
@@ -15,8 +15,8 @@
 
 	onMount(() => {
 		if (isSelected) {
-			if (isSingleChoice) selected = data.name;
-			else groupSelect = [data.name];
+			if (isSingleChoice) selected = data;
+			else groupSelect = [data];
 		}
 	});
 </script>
@@ -28,27 +28,27 @@
 			on:click={() => {
 				isSelected = !isSelected;
 				dispatch('radioSelection', {
-					filter: data.name,
+					filter: data,
 					selected: isSelected
 				});
 			}}
 			checked={isSelected}
 			name={`radio-element-${parent}`}
-			value={data.name}>{data.name}</Radio
+			value={data}>{data}</Radio
 		>
 	{:else}
 		<Checkbox
-			value={data.name}
+			value={data}
 			bind:group={groupSelect}
 			on:change={() => {
 				isSelected = !isSelected;
 				dispatch('checkboxSelection', {
-					filter: data.name,
+					filter: data,
 					selected: isSelected
 				});
 			}}
-			name={`${parent}-${data.name}`}
-			>{data.name}
+			name={`${parent}-${data}`}
+			>{data}
 		</Checkbox>
 	{/if}
 </div>

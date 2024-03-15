@@ -17,6 +17,6 @@
 		color: rgb(207, 207, 207);
 		height: 100vh;
 		touch-action: manipulation;
-		background: #dddddd;
+		background: rgb(217, 225, 235);
 	}
 </style>

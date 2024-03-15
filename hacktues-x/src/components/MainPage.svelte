@@ -1,40 +1,18 @@
 <script lang="ts">
 	import FilterContainer from './filter/Filter-container.svelte';
+	import { FILTER_TYPES } from './filter/enums/filter-types.enum';
 	import Info from './info/Info.svelte';
 	import Navbar from './navigation-bar/Navbar.svelte';
 	const filters = [
 		{
-			title: 'testFilter',
-			isSingle: true,
-			members: [
-				{ name: 'test1' },
-				{ name: 'test2' },
-				{ name: 'test3' },
-				{ name: 'test4' },
-				{ name: 'test5' }
-			]
+			type: FILTER_TYPES.TAGS,
+			title: 'Tags',
+			isSingle: false
 		},
 		{
-			title: 'testFilter2',
-			isSingle: true,
-			members: [
-				{ name: 'test1' },
-				{ name: 'test2' },
-				{ name: 'test3' },
-				{ name: 'test4' },
-				{ name: 'test5' }
-			]
-		},
-		{
-			title: 'testFilter3',
-			isSingle: false,
-			members: [
-				{ name: 'test1' },
-				{ name: 'test2' },
-				{ name: 'test3' },
-				{ name: 'test4' },
-				{ name: 'test5' }
-			]
+			type: FILTER_TYPES.DEPARTMENTS,
+			title: 'Departments',
+			isSingle: false
 		}
 	];
 </script>
@@ -73,7 +51,7 @@
 		margin-left: 5%;
 		width: 90%;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
 	}
 

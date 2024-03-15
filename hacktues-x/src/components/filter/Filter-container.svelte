@@ -31,6 +31,10 @@
 		max-height: 100%;
 	}
 
+	#filter{
+		flex: 1;
+	}
+
 	#filter-list {
 		display: flex;
 		width: 100%;

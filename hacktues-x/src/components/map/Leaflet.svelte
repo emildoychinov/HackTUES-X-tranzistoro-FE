@@ -27,10 +27,14 @@
 		map.on('dragstart', (e) => {
 			isBeingDragged = true;
 		});
+
+		//TODO: send to server
 		map.on('dragend', (e) => {
 			isBeingDragged = !isBeingDragged;
 			if (!isBeingDragged) console.log(getMapBounds());
 		});
+
+		//TODO: send to server
 		map.on('zoomend', (e) => {
 			if (zoom && e.target._zoom < zoom) {
 				console.log(getMapBounds());

@@ -37,15 +37,6 @@
 	});
 
 	const dispatch = createEventDispatcher();
-
-	// Wait for position to be obtained before logging map bounds
-	afterUpdate(() => {
-			if (positionObtained && leaflet && leaflet.getView() !== undefined) {
-					setTimeout(() => {
-							console.log(leaflet.getMapBounds());
-					}, 100);
-			}
-	});
 </script>
 
 <div id="map-container" class="rounded-lg">
