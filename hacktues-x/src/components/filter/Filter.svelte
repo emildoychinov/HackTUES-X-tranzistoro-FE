@@ -16,8 +16,7 @@
 
 	onMount(async () => {
 		serverData = (await getData(`/facilities/${data.type}`)).data;
-	})
-
+	});
 
 	//TODO: send to server
 	const handleFilters = () => {
@@ -30,9 +29,9 @@
 
 {#if serverData}
 	<div id="filter-name">
-		<Button class='w-[200px]' color="alternative">{data.title}</Button>
-	
-		<Dropdown class='w-[200px] relative h-fit max-h-[500px] overflow-scroll'>
+		<Button class="w-[200px]" color="alternative">{data.title}</Button>
+
+		<Dropdown class="relative h-fit max-h-[500px] w-[200px] overflow-scroll">
 			{#each serverData as member}
 				<DropdownItem>
 					<FilterMember

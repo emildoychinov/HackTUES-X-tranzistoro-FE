@@ -31,7 +31,7 @@
 		max-height: 100%;
 	}
 
-	#filter{
+	#filter {
 		flex: 1;
 	}
 

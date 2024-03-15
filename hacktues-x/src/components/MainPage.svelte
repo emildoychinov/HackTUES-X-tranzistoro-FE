@@ -18,7 +18,7 @@
 </script>
 
 <div id="parent-container">
-	<Navbar/>
+	<Navbar />
 	<div id="filters" class="scroll-hidden">
 		<FilterContainer {filters} />
 	</div>
