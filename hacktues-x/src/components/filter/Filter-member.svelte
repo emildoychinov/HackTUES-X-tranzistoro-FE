@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
-	import type { FilterMemberDTO } from './dto/filter-member.dto';
 	import { Checkbox, Group, Radio } from 'flowbite-svelte';
+	import { FILTER_TYPES } from './enums/filter-types.enum';
 
 	export let data: any;
+	export let id: any = 0;
 	export let isSingleChoice: boolean = true;
 	export let parent: string = '';
 	export let isSelected: boolean = false;
@@ -43,7 +44,7 @@
 			on:change={() => {
 				isSelected = !isSelected;
 				dispatch('checkboxSelection', {
-					filter: data,
+					filter: parent === FILTER_TYPES.COMPANIES ? id : data,
 					selected: isSelected
 				});
 			}}

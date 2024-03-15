@@ -16,6 +16,5 @@
 	<NavHamburger />
 	<NavUl>
 		<NavLi href="/">Home</NavLi>
-		<NavLi href="/auth">Login</NavLi>
 	</NavUl>
 </Navbar>

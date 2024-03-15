@@ -1,12 +1,10 @@
 import { writable } from 'svelte/store';
-import type { DepartmentStore } from './interfaces/department-store-interface';
 
-const initialfilterStore: DepartmentStore | any = '';
-export const departmentStore = writable(initialfilterStore);
+export const departmentStore = writable();
 
-export function updateDepartment(selected: string | undefined) {
+export function updateDepartment(newStore: unknown) {
 	departmentStore.update((departmentStore) => {
-		(departmentStore as DepartmentStore).selected = selected;
+		departmentStore = newStore;
 		return departmentStore;
 	});
 }

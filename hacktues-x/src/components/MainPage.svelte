@@ -16,6 +16,11 @@
 			type: FILTER_TYPES.DEPARTMENTS,
 			title: 'Departments',
 			isSingle: false
+		},
+		{
+			type: FILTER_TYPES.DEPARTMENTS,
+			title: 'Companies',
+			isSingle: false
 		}
 	];
 </script>
