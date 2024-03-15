@@ -46,9 +46,11 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@preact/signals-core": "^1.5.1",
 		"axios": "^1.6.7",
 		"chart.js": "^4.4.2",
 		"https": "^1.0.0",
+		"socket.io-client": "^4.7.5",
 		"tw-elements": "^2.0.0"
 	}
 }
