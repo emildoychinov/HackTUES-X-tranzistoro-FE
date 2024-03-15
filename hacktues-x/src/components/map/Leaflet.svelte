@@ -14,6 +14,7 @@
 	let previousZoom = zoom;
 
 	onMount(() => {
+		
 		//TODO getMapBounds + request
 		if (!bounds && (!view || !zoom)) {
 			throw new Error('Must set either bounds, or view and zoom.');

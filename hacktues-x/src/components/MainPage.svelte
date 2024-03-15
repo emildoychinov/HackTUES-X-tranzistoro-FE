@@ -1,6 +1,7 @@
 <script lang="ts">
 	import FilterContainer from './filter/Filter-container.svelte';
 	import Info from './info/Info.svelte';
+	import Navbar from './navigation-bar/Navbar.svelte';
 	const filters = [
 		{
 			title: 'testFilter',
@@ -39,7 +40,7 @@
 </script>
 
 <div id="parent-container">
-	<div id="nav-bar"></div>
+	<Navbar/>
 	<div id="filters" class="scroll-hidden">
 		<FilterContainer {filters} />
 	</div>
