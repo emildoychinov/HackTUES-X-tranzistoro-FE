@@ -268,13 +268,12 @@
 	];
 </script>
 
-<div>
-	<div class="container">
+<div class="container">
 		{#each gyms as gym}
 			<Gym {gym} />
 		{/each}
-	</div>
 </div>
+
 
 <style>
 	.container {
@@ -283,5 +282,6 @@
 		gap: 20px;
 		max-height: 80vh;
 		overflow-y: auto;
+		width: 100%;
 	}
 </style>

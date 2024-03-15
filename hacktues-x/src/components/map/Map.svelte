@@ -5,6 +5,7 @@
 	import Popup from './Popup.svelte';
 	import { afterUpdate, createEventDispatcher, onMount } from 'svelte';
 	import { view } from '../../stores/map.stores';
+	import { WidgetPlaceholder } from 'flowbite-svelte';
 
 	let lat = 0;
 	let long = 0;
@@ -76,6 +77,8 @@
 							</Marker>
 					{/each}
 			</Leaflet>
+		{:else}
+		<WidgetPlaceholder divClass="w-full h-full self-center"/>
 	{/if}
 </div>
 

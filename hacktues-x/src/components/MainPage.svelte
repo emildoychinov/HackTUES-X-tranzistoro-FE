@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { Toggle } from 'flowbite-svelte';
 	import FilterContainer from './filter/Filter-container.svelte';
 	import Info from './info/Info.svelte';
 	import Navbar from './navigation-bar/Navbar.svelte';
+	import GymsContainer from './products/Gyms-container.svelte';
+	export let isChecked:boolean = false;
 	const filters = [
 		{
 			title: 'testFilter',
@@ -43,9 +46,20 @@
 	<Navbar/>
 	<div id="filters" class="scroll-hidden">
 		<FilterContainer {filters} />
+		<Toggle
+			color="blue"
+			checked={isChecked}
+			on:change={() => {
+				isChecked = !isChecked;
+			}}>map</Toggle
+		>
 	</div>
 	<div id="page-content" class="scroll-hidden">
-		<Info></Info>
+		{#if isChecked}
+		<Info/>
+		{:else}
+		<GymsContainer/>
+		{/if}
 	</div>
 </div>
 

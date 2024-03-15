@@ -54,16 +54,15 @@
 	const handleSelection = (selection: string) => {
 		selected = selection === selected ? '' : selection;
 	};
-	const currentDate = Date.now();
-
-	const datesLast7Days = Array.from({ length: 7 }, (_, i) =>
-		new Date(currentDate - i * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
-	);
-	export const daysOfWeek = datesLast7Days.map((timestamp) => {
-		const date = new Date(timestamp);
-		const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
-		return { timestamp, dayOfWeek };
-	});
+const daysOfWeek = [
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+		"Sunday"
+	]
 
 	export let stat = {
 		'00:00': 5,
@@ -167,7 +166,7 @@
 	};
 </script>
 
-<Card>
+<Card >
 	<canvas id="fitnessChart" width="400" height="200"></canvas>
 	<div class="chip-container">
 		<div class="font-bold">Departments</div>
@@ -175,7 +174,7 @@
 		{#each gym.departments as department}
 			<Card
 				on:click={() => handleSelection(department)}
-				class={'m-[1px] h-3 min-w-3 max-w-fit scale-x-90 scale-y-90 items-center justify-center rounded-3xl text-black hover:bg-slate-400' +
+				class={'h-1 max-w-fit scale-x-75 scale-y-75 items-center justify-center rounded-3xl text-black hover:bg-slate-400' +
 					(selected === department ? ' bg-slate-400 ' : ' bg-slate-300 ')}
 			>
 				<div class="self-center">{department}</div>
@@ -203,11 +202,9 @@
 			{#each daysOfWeek as day}
 				<Button
 					class="w-1/3 rounded-md  border text-black  hover:bg-slate-100"
-					value={day.dayOfWeek}
+					value={day}
 				>
-					{day.timestamp == new Date(currentDate).toISOString().slice(0, 10)
-						? 'Today'
-						: day.dayOfWeek}
+					{day}
 				</Button>
 			{/each}
 		</div>
