@@ -1,18 +1,22 @@
 <script lang="ts">
-	import { Card } from "flowbite-svelte";
-	import type { GymDTO } from "./dto/product.dto";
-  export let gym: GymDTO;
+	import { Card } from 'flowbite-svelte';
+	import type { GymDTO } from './dto/product.dto';
+	export let gym: GymDTO;
 </script>
 
-<Card class="container" href='/facility/2'>
-	<img class="img" src="https://emilypost.com/client_media/images/blogs/everyday-gym.jpg" alt={gym.name}/>
-  <div class="text-center text-xl font-bold">{gym.name}</div>
+<Card class="container" href="/facility/2">
+	<img
+		class="img"
+		src="https://emilypost.com/client_media/images/blogs/everyday-gym.jpg"
+		alt={gym.name}
+	/>
+	<div class="text-center text-xl font-bold">{gym.name}</div>
 </Card>
 
 <style>
 	.container {
 		display: flex;
-		justify-content: center; 
+		justify-content: center;
 		align-items: center;
 		font-family: Arial, sans-serif;
 		flex-direction: column;
@@ -26,5 +30,4 @@
 		width: 80%;
 		align-self: center;
 	}
-
 </style>

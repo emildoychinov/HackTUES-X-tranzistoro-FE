@@ -59,6 +59,6 @@
 		display: flex;
 		align-items: flex-start;
 		justify-content: flex-start;
-		flex-direction: row;
+		flex-direction: column;
 	}
 </style>
