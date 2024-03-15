@@ -4,18 +4,12 @@
 	export let gym: any;
 </script>
 
-
 <Card class="h-[250px]" href="/facility/2">
-	<img
-		class="img"
-		src={gym.thumbnail.url}
-		alt={gym.name}
-	/>
+	<img class="img" src={gym.thumbnail.url} alt={gym.name} />
 	<div class="text-center text-xl font-bold">{gym.name}</div>
 </Card>
 
 <style>
-
 	.img {
 		object-fit: scale-down;
 		height: 80%;

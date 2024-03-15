@@ -15,16 +15,15 @@
 			long = position.coords.longitude;
 			const data = await getData('facilities/grid', {
 				userLat: lat,
-				userLon: long,
-			})
+				userLon: long
+			});
 			gyms = data.data;
 			console.log(gyms);
-		})
-	})
-	
+		});
+	});
 </script>
 
-<div class="container shadow-xl rounded-lg p-4">
+<div class="container rounded-lg p-4 shadow-xl">
 	{#if Array.isArray(gyms) && gyms.length > 0}
 		{#each gyms as gym}
 			<Gym {gym} />

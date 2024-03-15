@@ -29,7 +29,7 @@
 			checked={isChecked}
 			on:change={() => {
 				isChecked = !isChecked;
-			}}>{'Load ' + (isChecked ? 'Map View' : 'Grid View')	}</Toggle
+			}}>{'Load ' + (isChecked ? 'Map View' : 'Grid View')}</Toggle
 		>
 	</div>
 	<div id="page-content" class="scroll-hidden">

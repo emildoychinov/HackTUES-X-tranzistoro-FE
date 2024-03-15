@@ -7,6 +7,6 @@ export function getData(route: string, params?: any) {
 		params,
 		paramsSerializer: (params) => {
 			return qs.stringify(params);
-		},
+		}
 	});
 }
