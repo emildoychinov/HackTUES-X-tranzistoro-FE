@@ -30,7 +30,7 @@
 	});
 </script>
 
-<div class="container flex justify-center rounded-lg p-4 shadow-lg">
+<div class="container rounded-lg p-4 shadow-lg">
 	{#if Array.isArray($departmentStore) && $departmentStore.length > 0}
 		{#each $departmentStore as gym}
 			<div transition:fade>
@@ -42,6 +42,7 @@
 
 <style>
 	.container {
+		align-items: center;
 		display: flex;
 		border-radius: 10px;
 		flex-direction: column;

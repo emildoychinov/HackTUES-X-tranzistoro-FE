@@ -3,7 +3,7 @@
 	import FilterMember from './Filter-member.svelte';
 	import type { FilterDTO } from './dto/filter.dto';
 	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import type { FILTER_TYPES } from './enums/filter-types.enum';
+	import { FILTER_TYPES } from './enums/filter-types.enum';
 	import { onMount } from 'svelte';
 	import axios from 'axios';
 	import { getData } from '$lib/helpers/interceptor';
@@ -17,27 +17,26 @@
 	let showList = false;
 
 	onMount(async () => {
-		serverData = (await getData(`facilities/${data.type}`)).data;
+		serverData = (await getData(
+			data.type !== FILTER_TYPES.COMPANIES ? `facilities/${data.type}` : `companies/grid`
+		)).data;
+		console.log(serverData);
 	});
 
 	//TODO: send to server
 	const handleFilters = () => {
 		const unsubscribe = filterStore.subscribe(async (values) => {
-			if (!data.isSingle) {
-				const group = Object.values(values).filter((value) => {
-					if (value.name === data.type) {
-						return value.group;
-					}
-				});
-				if ($lngLatStore) {
-					const requestOptions = {
-						userLat: $lngLatStore.lat,
-						userLon: $lngLatStore.long
-					};
-					requestOptions[data.type] = group[0].group;
-					console.log(requestOptions);
-					$departmentStore = (await getData('facilities/grid', requestOptions)).data;
+			if ($lngLatStore) {
+				const requestOptions = {
+					userLat: $lngLatStore.lat,
+					userLon: $lngLatStore.long
+				};	
+				for(let value of values){
+					console.log(value);
+					requestOptions[value.name == FILTER_TYPES.COMPANIES ? 'companyIds' : value.name] = value?.group ?? [];
 				}
+				$departmentStore = (await getData('facilities/grid', requestOptions)).data;
+				console.log($departmentStore);
 			}
 		});
 
@@ -56,7 +55,7 @@
 						<FilterMember
 							id={member.id ?? 0}
 							parent={data.title}
-							data={member}
+							data={member.name ?? member}
 							isSingleChoice={data.isSingle ?? true}
 							isSelected={group.includes(member) || selected === member}
 							on:radioSelection={(event) => {
@@ -65,7 +64,6 @@
 								handleFilters();
 							}}
 							on:checkboxSelection={(event) => {
-								console.log(event.detail);
 								if (event.detail.selected) {
 									group.push(event.detail.filter);
 								} else {

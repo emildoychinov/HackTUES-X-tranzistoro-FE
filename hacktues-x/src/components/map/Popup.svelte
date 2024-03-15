@@ -4,6 +4,7 @@
 
 	const dispatch = createEventDispatcher();
 	export let id: number;
+	export let isUser: boolean = false;
 	let popup: L.Popup | undefined;
 	let popupElement: HTMLElement;
 
@@ -17,7 +18,12 @@
 
 		if (layer) {
 			layer.bindPopup(popup);
-			layer.on('popupopen', () => (dispatch('popupOpen', { id }), (open = true)));
+			layer.on('popupopen', () => {
+				if(!isUser){
+					dispatch('popupOpen', { id });
+					(open = true)
+				}
+			});
 			layer.on('popupclose', () => (dispatch('popupOpen', { id }), (open = false)));
 		}
 	});

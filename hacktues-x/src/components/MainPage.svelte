@@ -18,7 +18,7 @@
 			isSingle: false
 		},
 		{
-			type: FILTER_TYPES.DEPARTMENTS,
+			type: FILTER_TYPES.COMPANIES,
 			title: 'Companies',
 			isSingle: false
 		}
