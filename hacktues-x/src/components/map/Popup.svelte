@@ -19,9 +19,9 @@
 		if (layer) {
 			layer.bindPopup(popup);
 			layer.on('popupopen', () => {
-				if(!isUser){
+				if (!isUser) {
 					dispatch('popupOpen', { id });
-					(open = true)
+					open = true;
 				}
 			});
 			layer.on('popupclose', () => (dispatch('popupOpen', { id }), (open = false)));

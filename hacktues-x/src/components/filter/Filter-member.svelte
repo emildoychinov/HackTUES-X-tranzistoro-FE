@@ -43,12 +43,12 @@
 			bind:group={groupSelect}
 			on:change={() => {
 				isSelected = !isSelected;
-				if(!groupSelect.length){
+				if (!groupSelect.length) {
 					isSelected = false;
 				}
 				console.log(isSelected, id);
 				dispatch('checkboxSelection', {
-					filter: parent.toLowerCase() 	 === FILTER_TYPES.COMPANIES ? id : data,
+					filter: parent.toLowerCase() === FILTER_TYPES.COMPANIES ? id : data,
 					selected: isSelected
 				});
 			}}

@@ -7,8 +7,8 @@
 	import { view } from '../../stores/map.stores';
 	import { WidgetPlaceholder } from 'flowbite-svelte';
 	import { lngLatStore } from '../../stores/lngLat.store';
-	import gymLogo from '$lib/assets/gym-logo.svg'
-	import userLogo from '$lib/assets/user-icon.svg'
+	import gymLogo from '$lib/assets/gym-logo.svg';
+	import userLogo from '$lib/assets/user-icon.svg';
 
 	let lat = 0;
 	let long = 0;
@@ -51,7 +51,7 @@
 			{#each markerLocations as latLng, id}
 				<Marker {id} {latLng} width={40} height={40}>
 					<!-- ShipBit Icon -->
-					<img src={!id ? userLogo : gymLogo} alt='gym'/>
+					<img src={!id ? userLogo : gymLogo} alt="gym" />
 
 					{#if id}
 						<Popup

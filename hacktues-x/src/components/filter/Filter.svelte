@@ -17,9 +17,11 @@
 	let showList = false;
 
 	onMount(async () => {
-		serverData = (await getData(
-			data.type !== FILTER_TYPES.COMPANIES ? `facilities/${data.type}` : `companies/grid`
-		)).data;
+		serverData = (
+			await getData(
+				data.type !== FILTER_TYPES.COMPANIES ? `facilities/${data.type}` : `companies/grid`
+			)
+		).data;
 		console.log(serverData);
 	});
 
@@ -30,10 +32,11 @@
 				const requestOptions = {
 					userLat: $lngLatStore.lat,
 					userLon: $lngLatStore.long
-				};	
-				for(let value of values){
+				};
+				for (let value of values) {
 					console.log(value);
-					requestOptions[value.name == FILTER_TYPES.COMPANIES ? 'companyIds' : value.name] = value?.group ?? [];
+					requestOptions[value.name == FILTER_TYPES.COMPANIES ? 'companyIds' : value.name] =
+						value?.group ?? [];
 				}
 				$departmentStore = (await getData('facilities/grid', requestOptions)).data;
 				console.log($departmentStore);
