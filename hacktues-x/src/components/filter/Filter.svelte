@@ -29,7 +29,7 @@
 
 {#if serverData}
 	<div id="filter-name">
-		<Button class="w-[200px]" color="alternative">{data.title}</Button>
+		<Button class="w-[200px] shadow-xl" color="alternative">{data.title}</Button>
 
 		<Dropdown class="relative h-fit max-h-[500px] w-[200px] overflow-scroll">
 			{#each serverData as member}

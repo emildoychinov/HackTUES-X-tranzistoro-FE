@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Toggle } from 'flowbite-svelte';
+	import { Toggle, WidgetPlaceholder } from 'flowbite-svelte';
 	import FilterContainer from './filter/Filter-container.svelte';
 	import { FILTER_TYPES } from './filter/enums/filter-types.enum';
 	import Info from './info/Info.svelte';
@@ -29,7 +29,7 @@
 			checked={isChecked}
 			on:change={() => {
 				isChecked = !isChecked;
-			}}>map</Toggle
+			}}>{'Load ' + (isChecked ? 'Map View' : 'Grid View')	}</Toggle
 		>
 	</div>
 	<div id="page-content" class="scroll-hidden">

@@ -68,6 +68,8 @@
 				</Marker>
 			{/each}
 		</Leaflet>
+	{:else}
+		<WidgetPlaceholder></WidgetPlaceholder>
 	{/if}
 </div>
 
