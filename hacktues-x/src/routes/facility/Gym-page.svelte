@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Navbar from '../../components/navigation-bar/Navbar.svelte';
 	import type { GymDTO } from '../../components/products/dto/product.dto';
 	import GymInfo from '../../components/products/gym-page/Gym-info.svelte';
 	import Statistic from '../../components/products/gym-page/Statistic.svelte';
@@ -7,6 +8,7 @@
 </script>
 
 <div class="gym-page">
+	<Navbar />
 	<div class="self-center text-4xl font-extrabold">Hellbind fitness</div>
 	<div class="gym-containers">
 		<GymInfo gymPar={gym} />
