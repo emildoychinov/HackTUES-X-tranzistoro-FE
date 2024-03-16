@@ -7,7 +7,6 @@
 	let isCardOpen = false;
 	let selectedCard = 2;
 	let data: any = undefined;
-
 </script>
 
 <div id="page-container">
@@ -16,14 +15,14 @@
 		<Map
 			on:openCard={async (event) => {
 				isCardOpen = true;
-				data = (await getData(`facilities/${event.detail.data.id}`)).data;	
+				data = (await getData(`facilities/${event.detail.data.id}`)).data;
 			}}
 		></Map>
 	</div>
 	<div id="info" transition:fade>
 		{#if isCardOpen && data}
 			{#key data}
-				<Card data={data}></Card>
+				<Card {data}></Card>
 			{/key}
 		{/if}
 	</div>

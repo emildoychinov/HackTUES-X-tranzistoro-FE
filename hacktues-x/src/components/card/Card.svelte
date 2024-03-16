@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	export let data:any;
+	export let data: any;
 	let gallery: any;
 	let departments: any;
 	onMount(() => {
@@ -12,13 +12,12 @@
 				src: obj.url,
 				alt: 'thumbnail',
 				title: 'thumbnail'
-			}
-		})
+			};
+		});
 		departments = data.departments.map((department: any) => {
 			return department.type;
-		})
-	})
-
+		});
+	});
 </script>
 
 <div id="card-container" transition:fade>
@@ -41,7 +40,7 @@
 						let:Controls
 						class="border-gray min-h-[320px] rounded-md bg-gray-200 dark:border-gray-800"
 						style="height: 100px !important"
-						>
+					>
 						<Controls class="text-black-400 items-center pt-4 dark:text-green-400" />
 					</Carousel>
 				{/if}

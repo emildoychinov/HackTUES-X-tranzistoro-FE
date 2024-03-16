@@ -24,7 +24,7 @@
 					open = true;
 				}
 			});
-			layer.on('popupclose', () => (dispatch('popupOpen', { open:false ,id }), (open = false)));
+			layer.on('popupclose', () => (dispatch('popupOpen', { open: false, id }), (open = false)));
 		}
 	});
 

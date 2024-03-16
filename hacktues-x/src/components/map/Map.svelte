@@ -12,8 +12,10 @@
 	import { getData } from '$lib/helpers/interceptor';
 	import { writable } from 'svelte/store';
 	import { markerLocationsStore, updateMarkerLocations } from '../../stores/marker-locations.store';
-	import { markerServerDataStore, updateMarkerServerData } from '../../stores/marker-server-data.store';
-
+	import {
+		markerServerDataStore,
+		updateMarkerServerData
+	} from '../../stores/marker-server-data.store';
 
 	let lat = 0;
 	let long = 0;
@@ -42,66 +44,62 @@
 			initialView = [$lngLatStore.lat, $lngLatStore.long];
 		}
 
-		updateMarkerLocations([initialView])
-
+		updateMarkerLocations([initialView]);
 	});
 
-	$:if(leaflet && leaflet.getView() !== undefined ){
-		if(!loadMap){
-			setTimeout(async ()=>{
+	$: if (leaflet && leaflet.getView() !== undefined) {
+		if (!loadMap) {
+			setTimeout(async () => {
 				loadMap = true;
 				bounds = leaflet.getMapBounds();
 				const requestOptions = {
 					corner1Lat: bounds.northEast.lat,
 					corner1Lon: bounds.northEast.lng,
 					corner2Lat: bounds.southWest.lat,
-					corner2Lon: bounds.southWest.lng,
-				}
+					corner2Lon: bounds.southWest.lng
+				};
 				updateMarkerServerData((await getData('facilities/map', requestOptions)).data);
-				const coords = Object.values($markerServerDataStore).map((value:any) => {
-					return [+value.lat, +value.lon]
+				const coords = Object.values($markerServerDataStore).map((value: any) => {
+					return [+value.lat, +value.lon];
 				});
-				updateMarkerLocations([
-						...coords	
-				])
+				updateMarkerLocations([...coords]);
 			}, 100);
 		}
 	}
 
 	const dispatch = createEventDispatcher();
-	
-	function findObject(lat: number, lon: number){
-		return $markerServerDataStore.find(
-			(item) => +item.lat == lat && +item.lon == lon
-		)
+
+	function findObject(lat: number, lon: number) {
+		return $markerServerDataStore.find((item) => +item.lat == lat && +item.lon == lon);
 	}
 </script>
 
 <div id="map-container" class="rounded-lg">
 	{#if initialView}
-			<Leaflet bind:this={leaflet} view={initialView} zoom={15}>
-					{#if Array.isArray($markerLocationsStore) && $markerLocationsStore.length}
-						{#each $markerLocationsStore as latLng, id}
-							<Marker {id} {latLng} width={40} height={40}>
+		<Leaflet bind:this={leaflet} view={initialView} zoom={15}>
+			{#if Array.isArray($markerLocationsStore) && $markerLocationsStore.length}
+				{#each $markerLocationsStore as latLng, id}
+					<Marker {id} {latLng} width={40} height={40}>
+						<img src={!id ? userLogo : gymLogo} alt="gym" />
 
-								<img src={!id ? userLogo : gymLogo} alt="gym" />
-
-								{#if id}
-									<Popup
-										isUser={!id}
-										on:popupOpen={(event) => {
-											if(event.detail.open){
-												const foundObject = findObject(latLng[0], latLng[1]);
-												dispatch('openCard', { data: {id: foundObject?.id, name: foundObject?.name} });
-											}
-										}}
-										{id}>{findObject(latLng[0], latLng[1])?.name ?? null}</Popup
-									>
-								{/if}
-							</Marker>
-						{/each}
-					{/if}
-			</Leaflet>
+						{#if id}
+							<Popup
+								isUser={!id}
+								on:popupOpen={(event) => {
+									if (event.detail.open) {
+										const foundObject = findObject(latLng[0], latLng[1]);
+										dispatch('openCard', {
+											data: { id: foundObject?.id, name: foundObject?.name }
+										});
+									}
+								}}
+								{id}>{findObject(latLng[0], latLng[1])?.name ?? null}</Popup
+							>
+						{/if}
+					</Marker>
+				{/each}
+			{/if}
+		</Leaflet>
 	{:else}
 		<WidgetPlaceholder></WidgetPlaceholder>
 	{/if}
