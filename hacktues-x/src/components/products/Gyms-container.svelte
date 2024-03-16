@@ -25,6 +25,7 @@
 				userLon: long
 			});
 			gyms = data.data;
+			console.log(gyms);
 			updateDepartment(gyms);
 		});
 	});

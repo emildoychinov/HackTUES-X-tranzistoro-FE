@@ -1,57 +1,24 @@
 <script lang="ts">
-	import { Badge, Button, Card, Carousel, Thumbnails, Toggle } from 'flowbite-svelte';
-	import type { CardDTO } from './dto/card.dto';
+	import { Badge, Button, Card, Carousel } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	export let data: CardDTO = {
-		name: 'Premium Gym Flais Nadejda',
-		address: 'g.k Nadejda, ul. "Lyuborodie", 1220 Sofia',
-		people: 7,
-		tags: [
-			'hello',
-			'asdfasdfasdfsadfasdfasfdasd',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello'
-		],
-		departments: [
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello',
-			'hello'
-		],
-		images: [
-			{
-				alt: 'Image',
-				src: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg',
-				title: ''
-			},
-			{
-				alt: 'Image 2',
-				src: 'https://upload.wikimedia.org/wikipedia/commons/2/22/Everest%2C_Nepal%2C_Himalayas.jpg',
-				title: ''
+	export let data:any;
+	let gallery: any;
+	let departments: any;
+	onMount(() => {
+		gallery = data.gallery.map((obj: any) => {
+			return {
+				src: obj.url,
+				alt: 'thumbnail',
+				title: 'thumbnail'
 			}
-		]
-	};
+		})
+		departments = data.departments.map((department: any) => {
+			return department.type;
+		})
+	})
+
 </script>
 
 <div id="card-container" transition:fade>
@@ -61,29 +28,33 @@
 				{data.name}
 			</h5>
 			<h6 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-				{data.address}
+				{data.streetName}
 			</h6>
 		</div>
 		<div class="max-w-4xl">
 			<div class="max-w-4xl space-y-4">
-				<Carousel
-					images={data.images}
-					imgClass="h-full w-full rounded-sm"
-					let:Indicators
-					let:Controls
-					class="border-gray min-h-[320px] rounded-md bg-gray-200 dark:border-gray-800"
-					style="height: 100px !important"
-				>
-					<Controls class="text-black-400 items-center pt-4 dark:text-green-400" />
-				</Carousel>
+				{#if gallery}
+					<Carousel
+						images={gallery}
+						imgClass="h-full w-full rounded-sm"
+						let:Indicators
+						let:Controls
+						class="border-gray min-h-[320px] rounded-md bg-gray-200 dark:border-gray-800"
+						style="height: 100px !important"
+						>
+						<Controls class="text-black-400 items-center pt-4 dark:text-green-400" />
+					</Carousel>
+				{/if}
 			</div>
 			<div id="filters-container">
 				<Card class="h-full overflow-y-scroll object-contain">
 					<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Tags</h5>
 					<div class="member-container">
-						{#each data.tags as tag}
-							<Badge class="mr-1 rounded-2xl" color="indigo">{tag}</Badge>
-						{/each}
+						{#if Array.isArray(data.tags) && data.tags.length}
+							{#each data.tags as tag}
+								<Badge class="mr-1 rounded-2xl" color="indigo">{tag}</Badge>
+							{/each}
+						{/if}
 					</div>
 				</Card>
 				<Card class="h-full overflow-y-scroll object-contain">
@@ -91,9 +62,11 @@
 						Departments
 					</h5>
 					<div class="member-container">
-						{#each data.departments as department}
-							<Badge class="border-mr-1 rounded-2xl" color="indigo">{department}</Badge>
-						{/each}
+						{#if Array.isArray(departments) && departments.length}
+							{#each departments as department}
+								<Badge class="border-mr-1 rounded-2xl" color="indigo">{department}</Badge>
+							{/each}
+						{/if}
 					</div>
 				</Card>
 			</div>

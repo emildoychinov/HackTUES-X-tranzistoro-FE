@@ -3,6 +3,9 @@
 	import L from 'leaflet';
 	import 'leaflet/dist/leaflet.css';
 	import { P } from 'flowbite-svelte';
+	import { getData } from '$lib/helpers/interceptor';
+	import { updateMarkerLocations } from '../../stores/marker-locations.store';
+	import { markerServerDataStore, updateMarkerServerData } from '../../stores/marker-server-data.store';
 
 	export let bounds: L.LatLngBoundsExpression | undefined = undefined;
 	export let view: L.LatLngExpression | undefined = undefined;
@@ -30,13 +33,13 @@
 		//TODO: send to server
 		map.on('dragend', (e) => {
 			isBeingDragged = !isBeingDragged;
-			if (!isBeingDragged) console.log(getMapBounds());
+			if (!isBeingDragged) updateMap();
 		});
 
 		//TODO: send to server
-		map.on('zoomend', (e) => {
+		map.on('zoomend', async (e) => {
 			if (zoom && e.target._zoom < zoom) {
-				console.log(getMapBounds());
+				updateMap();
 			}
 		});
 	});
@@ -73,6 +76,26 @@
 			};
 		}
 	}
+
+	async function updateMap() {
+		const bounds = getMapBounds();
+		if(bounds){
+			const requestOptions = {
+			corner1Lat: bounds.northEast.lat,
+			corner1Lon: bounds.northEast.lng,
+			corner2Lat: bounds.southWest.lat,
+			corner2Lon: bounds.southWest.lng,
+		}
+		updateMarkerServerData((await getData('facilities/map', requestOptions)).data);
+		const coords = Object.values($markerServerDataStore).map((value:any) => {
+			return [+value.lat, +value.lon]
+		});
+		updateMarkerLocations([
+			...coords	
+		])			
+		}
+	}
+
 </script>
 
 <div class="h-full w-full rounded-lg bg-white shadow-xl" bind:this={mapElement}>

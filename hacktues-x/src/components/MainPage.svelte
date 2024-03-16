@@ -5,6 +5,7 @@
 	import Info from './info/Info.svelte';
 	import Navbar from './navigation-bar/Navbar.svelte';
 	import GymsContainer from './products/Gyms-container.svelte';
+	import { setViews, viewStore } from '../stores/view.store';
 	export let isChecked: boolean = false;
 	const filters = [
 		{
@@ -34,7 +35,8 @@
 			checked={isChecked}
 			on:change={() => {
 				isChecked = !isChecked;
-			}}>{'Load ' + (isChecked ? 'Map View' : 'Grid View')}</Toggle
+				setViews(isChecked);
+			}}>{`Load ${$viewStore} View`}</Toggle
 		>
 	</div>
 	<div id="page-content" class="scroll-hidden">

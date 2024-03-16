@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { LatLngExpression } from 'leaflet';
+	import type { LatLngExpression, latLng } from 'leaflet';
 	import Leaflet from './Leaflet.svelte';
 	import Marker from './Marker.svelte';
 	import Popup from './Popup.svelte';
@@ -9,6 +9,11 @@
 	import { lngLatStore } from '../../stores/lngLat.store';
 	import gymLogo from '$lib/assets/gym-logo.svg';
 	import userLogo from '$lib/assets/user-icon.svg';
+	import { getData } from '$lib/helpers/interceptor';
+	import { writable } from 'svelte/store';
+	import { markerLocationsStore, updateMarkerLocations } from '../../stores/marker-locations.store';
+	import { markerServerDataStore, updateMarkerServerData } from '../../stores/marker-server-data.store';
+
 
 	let lat = 0;
 	let long = 0;
@@ -16,8 +21,12 @@
 	let markerLocations: Array<LatLngExpression>;
 	let leaflet: Leaflet;
 	let positionObtained = false;
+	let loadMap: boolean = false;
+	let bounds: any;
+	let serverData: any;
 
-	onMount(() => {
+	onMount(async () => {
+		loadMap = false;
 		if (!$lngLatStore) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				lat = position.coords.latitude;
@@ -32,39 +41,67 @@
 		} else {
 			initialView = [$lngLatStore.lat, $lngLatStore.long];
 		}
-		markerLocations = [
-			[$lngLatStore.lat, $lngLatStore.long],
-			[42.59721728849178, 23.597569936285546],
-			[42.59806565056914, 23.593701990833434],
-			[42.59752744429184, 23.595900765366984],
-			[42.59672058773207, 23.59599665598854],
-			[42.59764921051795, 23.594948374414577]
-		];
+
+		updateMarkerLocations([initialView])
+
 	});
 
+	$:if(leaflet && leaflet.getView() !== undefined ){
+		if(!loadMap){
+			setTimeout(async ()=>{
+				loadMap = true;
+				bounds = leaflet.getMapBounds();
+				const requestOptions = {
+					corner1Lat: bounds.northEast.lat,
+					corner1Lon: bounds.northEast.lng,
+					corner2Lat: bounds.southWest.lat,
+					corner2Lon: bounds.southWest.lng,
+				}
+				updateMarkerServerData((await getData('facilities/map', requestOptions)).data);
+				const coords = Object.values($markerServerDataStore).map((value:any) => {
+					return [+value.lat, +value.lon]
+				});
+				updateMarkerLocations([
+						...coords	
+				])
+			}, 100);
+		}
+	}
+
 	const dispatch = createEventDispatcher();
+	
+	function findObject(lat: number, lon: number){
+		return $markerServerDataStore.find(
+			(item) => +item.lat == lat && +item.lon == lon
+		)
+	}
 </script>
 
 <div id="map-container" class="rounded-lg">
 	{#if initialView}
-		<Leaflet bind:this={leaflet} view={initialView} zoom={15}>
-			{#each markerLocations as latLng, id}
-				<Marker {id} {latLng} width={40} height={40}>
-					<!-- ShipBit Icon -->
-					<img src={!id ? userLogo : gymLogo} alt="gym" />
+			<Leaflet bind:this={leaflet} view={initialView} zoom={15}>
+					{#if Array.isArray($markerLocationsStore) && $markerLocationsStore.length}
+						{#each $markerLocationsStore as latLng, id}
+							<Marker {id} {latLng} width={40} height={40}>
 
-					{#if id}
-						<Popup
-							isUser={!id}
-							on:popupOpen={(event) => {
-								dispatch('openCard', { id: event.detail.id });
-							}}
-							{id}>gym_name</Popup
-						>
+								<img src={!id ? userLogo : gymLogo} alt="gym" />
+
+								{#if id}
+									<Popup
+										isUser={!id}
+										on:popupOpen={(event) => {
+											if(event.detail.open){
+												const foundObject = findObject(latLng[0], latLng[1]);
+												dispatch('openCard', { data: {id: foundObject?.id, name: foundObject?.name} });
+											}
+										}}
+										{id}>{findObject(latLng[0], latLng[1])?.name ?? null}</Popup
+									>
+								{/if}
+							</Marker>
+						{/each}
 					{/if}
-				</Marker>
-			{/each}
-		</Leaflet>
+			</Leaflet>
 	{:else}
 		<WidgetPlaceholder></WidgetPlaceholder>
 	{/if}
