@@ -14,3 +14,7 @@ export function updateMarkerServerData(newStore: unknown) {
 		return locationsStore;
 	});
 }
+
+export function setMarkerServerData(data: any[]) {
+	markerServerDataStore.set(data);
+}

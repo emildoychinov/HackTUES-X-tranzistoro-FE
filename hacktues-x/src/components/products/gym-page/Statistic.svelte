@@ -171,7 +171,7 @@
 			<div on:click={() => handleSelection(department)}>
 				<Badge
 					color="indigo"
-					class={'ml-[5px] h-5 max-w-fit rounded-2xl hover:cursor-pointer hover:bg-indigo-200' +
+					class={'ml-[5px] h-10 max-w-fit rounded-2xl hover:cursor-pointer hover:bg-indigo-200' +
 						(selected === department ? ' bg-indigo-200 ' : ' bg-indigo-100 ')}>{department}</Badge
 				>
 			</div>

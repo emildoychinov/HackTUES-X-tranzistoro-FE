@@ -16,3 +16,7 @@ export function updateMarkerLocations(newStore: unknown) {
 		return locationsStore;
 	});
 }
+
+export function setMarkerLocations(data: any[]) {
+	markerLocationsStore.set(data);
+}

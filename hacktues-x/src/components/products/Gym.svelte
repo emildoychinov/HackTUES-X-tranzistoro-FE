@@ -14,14 +14,9 @@
 	});
 </script>
 
-<Card class="h-[300px] w-[300px]" href="/facility/2">
+<Card class="h-[300px] w-[300px]" href={`facility/${gym.id}`}>
 	<img class="img" src={gym.thumbnail.url} alt={gym.name} />
 	<div class="text-center text-xl font-bold">{gym.name}</div>
-	<div class="center flex w-full justify-start">
-		<Badge class="text-start text-lg font-bold">
-			<img class="me-[10px] w-[40px]" src={personIcon} alt="person" />5</Badge
-		>
-	</div>
 </Card>
 
 <style>

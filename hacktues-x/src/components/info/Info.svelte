@@ -4,9 +4,19 @@
 	import Map from '../map/Map.svelte';
 	import type { CardDTO } from '../card/dto/card.dto';
 	import { getData } from '$lib/helpers/interceptor';
+	import { onDestroy } from 'svelte';
 	let isCardOpen = false;
 	let selectedCard = 2;
 	let data: any = undefined;
+	let id: number = 0;
+
+	const interval = setInterval(async () => {
+		data = (await getData(`facilities/${id}`)).data;
+	}, 10000);
+
+	onDestroy(() => {
+		clearInterval(interval);
+	});
 </script>
 
 <div id="page-container">
@@ -16,6 +26,7 @@
 			on:openCard={async (event) => {
 				isCardOpen = true;
 				data = (await getData(`facilities/${event.detail.data.id}`)).data;
+				id = event.detail.data.id;
 			}}
 		></Map>
 	</div>

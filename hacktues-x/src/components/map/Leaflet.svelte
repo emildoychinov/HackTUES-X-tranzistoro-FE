@@ -9,6 +9,7 @@
 		markerServerDataStore,
 		updateMarkerServerData
 	} from '../../stores/marker-server-data.store';
+	import { requestOptionsStore } from '../../stores/request-options.store';
 
 	export let bounds: L.LatLngBoundsExpression | undefined = undefined;
 	export let view: L.LatLngExpression | undefined = undefined;
@@ -83,13 +84,7 @@
 	async function updateMap() {
 		const bounds = getMapBounds();
 		if (bounds) {
-			const requestOptions = {
-				corner1Lat: bounds.northEast.lat,
-				corner1Lon: bounds.northEast.lng,
-				corner2Lat: bounds.southWest.lat,
-				corner2Lon: bounds.southWest.lng
-			};
-			updateMarkerServerData((await getData('facilities/map', requestOptions)).data);
+			updateMarkerServerData((await getData('facilities/map', $requestOptionsStore)).data);
 			const coords = Object.values($markerServerDataStore).map((value: any) => {
 				return [+value.lat, +value.lon];
 			});

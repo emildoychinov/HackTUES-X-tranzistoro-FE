@@ -4,15 +4,17 @@
 	import GymInfo from '../../components/products/gym-page/Gym-info.svelte';
 	import Statistic from '../../components/products/gym-page/Statistic.svelte';
 
-	export let gym: GymDTO;
+	export let gym: any;
 </script>
 
 <div class="gym-page">
 	<Navbar />
-	<div class="self-center text-4xl font-extrabold">Hellbind fitness</div>
+	<div class="self-center text-4xl font-extrabold">{gym.name}</div>
 	<div class="gym-containers">
-		<GymInfo gymPar={gym} />
-		<Statistic id={1} />
+		{#if gym}
+			<GymInfo {gym} />
+			<Statistic id={1} />
+		{/if}
 	</div>
 </div>
 

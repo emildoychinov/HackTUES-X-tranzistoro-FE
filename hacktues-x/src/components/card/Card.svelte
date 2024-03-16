@@ -2,6 +2,7 @@
 	import { Badge, Button, Card, Carousel } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import personIcon from '$lib/assets/person-icon.svg';
 
 	export let data: any;
 	let gallery: any;
@@ -20,7 +21,7 @@
 	});
 </script>
 
-<div id="card-container" transition:fade>
+<div id="card-container">
 	<Card id="project-card" class="h-full max-w-4xl overflow-y-scroll object-contain">
 		<div id="card-head">
 			<h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -29,6 +30,9 @@
 			<h6 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 				{data.streetName}
 			</h6>
+			<Badge class="text-start text-lg font-bold">
+				<img class="me-[10px] w-[40px]" src={personIcon} alt="person" />{data.attendance}</Badge
+			>
 		</div>
 		<div class="max-w-4xl">
 			<div class="max-w-4xl space-y-4">

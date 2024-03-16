@@ -3,91 +3,49 @@
 	import { cubicOut } from 'svelte/easing';
 	import type { GymDTO } from '../dto/product.dto';
 	import { ArrowRightAltOutline, ArrowLeftSolid } from 'flowbite-svelte-icons';
+	import { onMount } from 'svelte';
 
-	export let gymPar: GymDTO;
+	export let gym: any;
+	let images: any;
+	let departments: any;
+	let thumbnails: any;
 
-	export let gym: GymDTO = {
-		id: 10,
-		name: 'Health Hub',
-		logo: 'healthhub_logo.png',
-		location: {
-			lon: 144.9631,
-			lat: -37.8136
-		},
-		images: [
-			'https://desktop.bg/system/images/382880/normal/gaming_essentials_venom_amd.png',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg',
-			'https://emilypost.com/client_media/images/blogs/everyday-gym.jpg'
-		],
-		departments: ['Wellness', 'Mind-Body', 'Nutrition'],
-		tags: ['Health', 'Wellness', 'Lifestyle'],
-		classes: ['Wellness Workshops', 'Nutrition Classes', 'Mindfulness Meditation']
-	};
-
-	export const images = gym.images.map((image) => {
-		return {
-			alt: gym.name,
-			src: image,
-			title: gym.name
-		};
+	onMount(() => {
+		if (gym) {
+			console.log(gym);
+			images = gym.gallery.map((image: any) => {
+				return {
+					alt: 'gym-image',
+					src: image.url,
+					title: 'gym-image'
+				};
+			});
+			departments = gym.departments.map((department: any) => {
+				return department.type;
+			});
+		}
+		thumbnails = images.slice(0, 5);
 	});
+
 	const chunkSize = 5;
-	export let thumbnails = images.slice(0, 5);
+	let maxChunks: number = 0;
 	export let index = 0;
 	export let forward = true;
 	export let newIndex = 0;
 	export let currentChunk = 1;
-	export const maxChunks = Math.round(images.length / chunkSize);
 
 	export const handleChangeSkipThumbnail = (option: '-' | '+') => {
-		const maxIndex = Math.max(images.length - chunkSize, 0); // Ensure maxIndex is not negative
-
-		if (option === '-') {
-			currentChunk = Math.max(currentChunk - 1, 1);
-		} else {
-			currentChunk = Math.min(currentChunk + 1, maxChunks);
+		if (thumbnails && images) {
+			maxChunks = Math.round(images.length / chunkSize);
+			const maxIndex = Math.max(images.length - chunkSize, 0);
+			if (option === '-') {
+				currentChunk = Math.max(currentChunk - 1, 1);
+			} else {
+				currentChunk = Math.min(currentChunk + 1, maxChunks);
+			}
+			newIndex = (currentChunk - 1) * chunkSize;
+			thumbnails = images.slice((currentChunk - 1) * chunkSize, currentChunk * chunkSize);
 		}
-		newIndex = (currentChunk - 1) * chunkSize;
-		thumbnails = images.slice((currentChunk - 1) * chunkSize, currentChunk * chunkSize);
 	};
 
 	export const handleChangeCarouselIndex = (newIx: number) => {
@@ -96,8 +54,9 @@
 </script>
 
 <Card class="max-w-4xl space-y-4">
-	<Carousel {images} {forward} bind:index></Carousel>
-
+	{#if images}
+		<Carousel {images} {forward} bind:index></Carousel>
+	{/if}
 	<div class="flex flex-row transition-all duration-300">
 		<Button class="text-black" on:click={() => handleChangeSkipThumbnail('-')}>
 			<ArrowRightAltOutline class="h-1/4 scale-x-[-1]" />
@@ -124,30 +83,36 @@
 		</Button>
 	</div>
 
-	<div class="self-center">{currentChunk}/{maxChunks}</div>
+	{#if maxChunks && currentChunk}
+		<div class="self-center">{currentChunk}/{maxChunks}</div>
+	{/if}
 	<div>
 		<div class="min-w-72 font-bold">Tag</div>
 		<div class="chip-container flex flex-wrap">
-			{#each gym.tags as tag}
-				<Badge
-					color="indigo"
-					class="m-[1px] h-10 min-w-2 max-w-fit scale-x-90 scale-y-90 items-center justify-center rounded-2xl text-base"
-				>
-					{tag}
-				</Badge>
-			{/each}
+			{#if Array.isArray(gym.tags) && gym.tags.length}
+				{#each gym.tags as tag}
+					<Badge
+						color="indigo"
+						class="m-[1px] h-10 min-w-2 max-w-fit scale-x-90 scale-y-90 items-center justify-center rounded-2xl text-base"
+					>
+						{tag}
+					</Badge>
+				{/each}
+			{/if}
 		</div>
 
-		<div class="font-bold">Classes</div>
+		<div class="font-bold">Departments</div>
 		<div class="chip-container flex flex-wrap">
-			{#each gym.classes as gymClass}
-				<Badge
-					color="indigo"
-					class="m-[1px] h-10 min-w-2 max-w-fit scale-x-90 scale-y-90 items-center justify-center rounded-2xl text-base"
-				>
-					{gymClass}
-				</Badge>
-			{/each}
+			{#if Array.isArray(departments) && departments.length}
+				{#each departments as gymClass}
+					<Badge
+						color="indigo"
+						class="m-[1px] h-10 min-w-2 max-w-fit scale-x-90 scale-y-90 items-center justify-center rounded-2xl text-base"
+					>
+						{gymClass}
+					</Badge>
+				{/each}
+			{/if}
 		</div>
 	</div></Card
 >

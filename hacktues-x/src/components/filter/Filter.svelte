@@ -9,6 +9,16 @@
 	import { getData } from '$lib/helpers/interceptor';
 	import { departmentStore } from '../../stores/department.store';
 	import { lngLatStore } from '../../stores/lngLat.store';
+	import { viewStore } from '../../stores/view.store';
+	import { SCREEN_VIEWS } from '../../stores/enums/view.enum';
+	import { mapBoundsStore } from '../../stores/map-bounds.store';
+	import { markerLocationsStore, setMarkerLocations } from '../../stores/marker-locations.store';
+	import {
+		markerServerDataStore,
+		setMarkerServerData,
+		updateMarkerServerData
+	} from '../../stores/marker-server-data.store';
+	import { setRequestOptions, updateRequestOptions } from '../../stores/request-options.store';
 
 	export let data: FilterDTO;
 	let serverData: any;
@@ -29,17 +39,31 @@
 	const handleFilters = () => {
 		const unsubscribe = filterStore.subscribe(async (values) => {
 			if ($lngLatStore) {
-				const requestOptions = {
-					userLat: $lngLatStore.lat,
-					userLon: $lngLatStore.long
-				};
-				for (let value of values) {
-					console.log(value);
-					requestOptions[value.name == FILTER_TYPES.COMPANIES ? 'companyIds' : value.name] =
-						value?.group ?? [];
+				if ($viewStore === SCREEN_VIEWS.GRID) {
+					const requestOptions = {
+						userLat: $lngLatStore.lat,
+						userLon: $lngLatStore.long
+					};
+					for (let value of values) {
+						console.log(value);
+						requestOptions[value.name == FILTER_TYPES.COMPANIES ? 'companyIds' : value.name] =
+							value?.group ?? [];
+					}
+					$departmentStore = (await getData('facilities/grid', requestOptions)).data;
+					console.log($departmentStore);
+				} else {
+					const requestOptions = $mapBoundsStore;
+					for (let value of values) {
+						requestOptions[value.name == FILTER_TYPES.COMPANIES ? 'companyIds' : value.name] =
+							value?.group ?? [];
+					}
+					setRequestOptions(requestOptions);
+					setMarkerServerData((await getData('facilities/map', requestOptions)).data);
+					const coords = Object.values($markerServerDataStore).map((value: any) => {
+						return [+value.lat, +value.lon];
+					});
+					setMarkerLocations([$lngLatStore, ...coords]);
 				}
-				$departmentStore = (await getData('facilities/grid', requestOptions)).data;
-				console.log($departmentStore);
 			}
 		});
 

@@ -16,6 +16,8 @@
 		markerServerDataStore,
 		updateMarkerServerData
 	} from '../../stores/marker-server-data.store';
+	import { updateMapBounds } from '../../stores/map-bounds.store';
+	import { requestOptionsStore, setRequestOptions } from '../../stores/request-options.store';
 
 	let lat = 0;
 	let long = 0;
@@ -58,6 +60,8 @@
 					corner2Lat: bounds.southWest.lat,
 					corner2Lon: bounds.southWest.lng
 				};
+				setRequestOptions(requestOptions);
+				updateMapBounds(requestOptions);
 				updateMarkerServerData((await getData('facilities/map', requestOptions)).data);
 				const coords = Object.values($markerServerDataStore).map((value: any) => {
 					return [+value.lat, +value.lon];
@@ -66,6 +70,14 @@
 			}, 100);
 		}
 	}
+
+	const interval = setInterval(async () => {
+		updateMarkerServerData((await getData('facilities/map', $requestOptionsStore)).data);
+		const coords = Object.values($markerServerDataStore).map((value: any) => {
+			return [+value.lat, +value.lon];
+		});
+		updateMarkerLocations([...coords]);
+	}, 1000);
 
 	const dispatch = createEventDispatcher();
 

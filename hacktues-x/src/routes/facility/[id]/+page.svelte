@@ -2,13 +2,18 @@
 	import { onMount } from 'svelte';
 	import GymPage from '../Gym-page.svelte';
 	import type { GymDTO } from '../../../components/products/dto/product.dto';
+	import { page } from '$app/stores';
+	import { getData } from '$lib/helpers/interceptor';
 	export let id: string;
-	onMount(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		id = urlParams.get('id') as string;
+	let data: any;
+
+	onMount(async () => {
+		id = $page.params.id;
+		data = (await getData(`facilities/${id}`)).data;
+		console.log(data);
 	});
-	//TO-DO - fetch Gym by param id
-	export let gym: GymDTO[] = [];
 </script>
 
-<GymPage gym={gym[0]} />
+{#key data}
+	<GymPage gym={data} />
+{/key}
